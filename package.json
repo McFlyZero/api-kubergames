@@ -5,8 +5,6 @@
   "dependencies": {
     "ejs": "^2.7.4",
     "express": "^4.18.2",
-    "express-myconnection": "^1.0.4",
-    "morgan": "^1.10.0",
     "mysql": "^2.18.1"
   },
   "devDependencies": {
@@ -16,7 +14,7 @@
     "dev": "nodemon src/app.js"
   },
   "keywords": [],
-  "author": "Arturo Kiwis",
+  "author": "Arturo Kiwis/Saul Ramos",
   "license": "ISC",
-  "description": ""
+  "description": "API for academic purposes"
 }
