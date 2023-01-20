@@ -1,153 +1,166 @@
-const { response } = require("express");
-const mysql = require("mysql2/promise");
-const db = require("../services/db");
-const config = require("../config");
+import fetchScores from "../helpers/fetch-scores.js";
+import submitScore from "../helpers/submit-score.js";
 
-const connection = mysql.createConnection(config.db);
 //GET Minesweeper
-exports.getMinesweeper = async (request, response) => {
+export async function getMinesweeper(request, response) {
   try {
-    const rows = await db.query(
-      "SELECT name_ms, score_ms FROM kubergames.sb_minesweeper ORDER BY score_ms ASC LIMIT 10;"
-    );
+    const scores = await fetchScores("minesweeper");
 
-    response.status(200).json({ results: rows });
+    response.status(200).json({ scores });
   } catch (error) {
     response.status(500).json({
-      error: error.message,
+      message: error.message,
+      error: error,
+      code: error.code,
     });
   }
-};
+}
 
 //POST Minesweeper
-exports.addMinesweeper = async (request, response) => {
+export async function addMinesweeper(request, response) {
   const { name, score } = request.body;
 
-  try {
-    const result = await db.query(
-      `INSERT INTO sb_minesweeper(name_ms, score_ms) VALUES ('${name}',${score})`
-    );
+  if (name.length > 4) {
+    return response.status(400).json({
+      message: "Name cannot be longer that 4 characters.",
+    });
+  }
 
-    response.status(201).json({
-      insertedId: result.insertedId,
-      affectedRows: result.affectedRows,
+  try {
+    const generatedKey = submitScore(name, score, "minesweeper");
+
+    response.status(200).json({
+      generatedKey,
       message: "Score submitted successfully!",
     });
   } catch (error) {
     response.status(500).json({
-      error: error.message,
+      message: error.message,
+      error: error,
       code: error.code,
     });
   }
-};
+}
 
 //GET Space Invaders
-exports.getSpaceInvaders = async (request, response) => {
+export async function getSpaceInvaders(request, response) {
   try {
-    const rows = await db.query(
-      "SELECT name_si, score_si FROM kubergames.sb_space_invaders ORDER BY score_si DESC LIMIT 10;"
-    );
+    const scores = await fetchScores("space-invaders");
 
-    response.json({ results: rows });
+    response.status(200).json({ scores });
   } catch (error) {
     response.status(500).json({
-      error: error.message,
+      message: error.message,
+      error: error,
+      code: error.code,
     });
   }
-};
+}
 
 //POST Space Invaders
-exports.addSpaceInvaders = async (request, response) => {
+export async function addSpaceInvaders(request, response) {
   const { name, score } = request.body;
 
-  try {
-    const result = await db.query(
-      `INSERT INTO sb_space_invaders(name_si, score_si) VALUES ('${name}',${score})`
-    );
+  if (name.length > 4) {
+    return response.status(400).json({
+      message: "Name cannot be longer that 4 characters.",
+    });
+  }
 
-    response.status(201).json({
-      insertedId: result.insertedId,
-      affectedRows: result.affectedRows,
+  try {
+    const generatedKey = submitScore(name, score, "space-invaders");
+
+    response.status(200).json({
+      generatedKey,
       message: "Score submitted successfully!",
     });
   } catch (error) {
     response.status(500).json({
-      error: error.message,
+      message: error.message,
+      error: error,
       code: error.code,
     });
   }
-};
+}
 
 //GET Snake Game
-exports.getSnakeGame = async (request, response) => {
+export async function getSnakeGame(request, response) {
   try {
-    const rows = await db.query(
-      "SELECT name_sg, score_sg FROM kubergames.sb_snake_game ORDER BY score_sg DESC LIMIT 10;"
-    );
+    const scores = await fetchScores("snake");
 
-    response.json({ results: rows });
+    response.status(200).json({ scores });
   } catch (error) {
     response.status(500).json({
-      error: error.message,
+      message: error.message,
+      error: error,
+      code: error.code,
     });
   }
-};
+}
 
 //POST Snake Game
-exports.addSnakeGame = async (request, response) => {
+export async function addSnakeGame(request, response) {
   const { name, score } = request.body;
 
-  try {
-    const result = await db.query(
-      `INSERT INTO sb_snake_game(name_sg, score_sg) VALUES ('${name}',${score})`
-    );
+  if (name.length > 4) {
+    return response.status(400).json({
+      message: "Name cannot be longer that 4 characters.",
+    });
+  }
 
-    response.status(201).json({
-      insertedId: result.insertedId,
-      affectedRows: result.affectedRows,
+  try {
+    const generatedKey = submitScore(name, score, "snake");
+
+    response.status(200).json({
+      generatedKey,
       message: "Score submitted successfully!",
     });
   } catch (error) {
     response.status(500).json({
-      error: error.message,
+      message: error.message,
+      error: error,
       code: error.code,
     });
   }
-};
+}
 
 //GET Flappy Bird
-exports.getFlappyBird = async (request, response) => {
+export async function getFlappyBird(request, response) {
   try {
-    const rows = await db.query(
-      "SELECT name_fb, score_fb FROM kubergames.sb_flappy_bird ORDER BY score_fb DESC LIMIT 10;"
-    );
+    const scores = await fetchScores("flappy-bird");
 
-    response.json({ results: rows });
+    response.status(200).json({ scores });
   } catch (error) {
     response.status(500).json({
-      error: error.message,
+      message: error.message,
+      error: error,
+      code: error.code,
     });
   }
-};
+}
 
 //POST Flappy Bird
-exports.addFlappyBird = async (request, response) => {
+export async function addFlappyBird(request, response) {
   const { name, score } = request.body;
 
-  try {
-    const result = await db.query(
-      `INSERT INTO sb_flappy_bird(name_fb, score_fb) VALUES ('${name}',${score})`
-    );
+  if (name.length > 4) {
+    return response.status(400).json({
+      message: "Name cannot be longer that 4 characters.",
+    });
+  }
 
-    response.status(201).json({
-      insertedId: result.insertedId,
-      affectedRows: result.affectedRows,
+  try {
+    const generatedKey = submitScore(name, score, "flappy-bird");
+
+    response.status(200).json({
+      generatedKey,
       message: "Score submitted successfully!",
     });
   } catch (error) {
     response.status(500).json({
-      error: error.message,
+      message: error.message,
+      error: error,
       code: error.code,
     });
   }
-};
+}
