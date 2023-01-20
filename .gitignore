@@ -1,2 +1,6 @@
 #Dependencies
 node_modules
+# Admin
+admin
+# Config
+.env
