@@ -1,26 +1,27 @@
-const express = require('express');
+import express from "express";
+
+import * as gamesController from "../controllers/controller.js";
 
 const router = express.Router();
-const gamescontroller = require('../controllers/controller');
 
 //GET scoreboard del space-invaders
-router.get('/space-invaders/', gamescontroller.getSpaceInvaders);
+router.get("/space-invaders/", gamesController.getSpaceInvaders);
 //POST nuevo nombre y score
-router.post('/space-invaders/add', gamescontroller.addSpaceInvaders);
+router.post("/space-invaders/", gamesController.addSpaceInvaders);
 
 //GET scoreboard del minesweeper
-router.get('/minesweeper/', gamescontroller.getMinesweeper);
+router.get("/minesweeper/", gamesController.getMinesweeper);
 //POST nuevo nombre y score
-router.post('/minesweeper/add', gamescontroller.addMinesweeper);
+router.post("/minesweeper/", gamesController.addMinesweeper);
 
 //GET scoreboard del snake-game
-router.get('/snake-game/', gamescontroller.getSnakeGame);
+router.get("/snake-game/", gamesController.getSnakeGame);
 //POST nuevo nombre y score
-router.post('/snake-game/add', gamescontroller.addSnakeGame);
+router.post("/snake-game/", gamesController.addSnakeGame);
 
 //GET scoreboard del flappy-bird
-router.get('/flappy-bird/', gamescontroller.getFlappyBird);
+router.get("/flappy-bird/", gamesController.getFlappyBird);
 //POST nuevo nombre y score
-router.post('/flappy-bird/add', gamescontroller.addFlappyBird);
+router.post("/flappy-bird/", gamesController.addFlappyBird);
 
-module.exports = router;
+export default router;
